@@ -1,0 +1,43 @@
+name: Publish to npm
+
+# On every push to main: typecheck, then publish @symmetly/ui if the version in package.json is
+# not on npm yet. To release: bump "version" in package.json and push. Pushes that do not change
+# the version just run the typecheck.
+#
+# Auth is npm trusted publishing (no token): the package's settings on npmjs.com name this
+# repository and this workflow file as the allowed publisher.
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  id-token: write # lets npm verify this run came from this repo
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+
+      # Trusted publishing needs npm 11.5.1 or newer.
+      - run: npm install -g npm@^11.5.1
+
+      - run: npm ci
+      - run: npm run typecheck
+
+      - name: Publish if this version is new
+        run: |
+          NAME=$(node -p "require('./package.json').name")
+          VERSION=$(node -p "require('./package.json').version")
+          if npm view "$NAME@$VERSION" version >/dev/null 2>&1; then
+            echo "$NAME@$VERSION is already on npm, nothing to publish."
+          else
+            npm publish
+          fi
