@@ -1,0 +1,22 @@
+/* Import once from each app's globals.css, right after `@import "tailwindcss";`:
+
+     @import "@symmetly/ui/styles.css";
+
+   It carries the glass tokens and shell styles, and maps them onto the Tailwind colour names the
+   apps already use (bg-card, border-border, text-muted, text-foreground, bg-background), so
+   existing pages pick up the new look before they are rebuilt with the g- primitives. */
+
+@import "./glass.css";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme inline {
+  --color-background: var(--bg-base);
+  --color-foreground: var(--text);
+  --color-muted: var(--muted);
+  --color-card: var(--glass-strong);
+  --color-border: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --font-sans: var(--font-jakarta), "Segoe UI Variable", "Segoe UI", system-ui, sans-serif;
+}
