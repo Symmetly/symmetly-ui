@@ -409,8 +409,11 @@ html[data-theme="dark"] .g-sc.pair {
   .g-grid2f {
     grid-template-columns: 1fr;
   }
+  /* people table: person, role and the row menu on one line; seats and date drop out */
   .g-trow {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 10px;
+    padding: 12px 8px;
   }
   .g-trow:not(.thead) > :nth-child(3),
   .g-trow:not(.thead) > :nth-child(4),
@@ -418,7 +421,31 @@ html[data-theme="dark"] .g-sc.pair {
     display: none;
   }
   .g-block {
-    padding: 22px 18px;
+    padding: 22px 16px;
+  }
+  /* seat grid: the person takes what is left, each app column is just wide enough */
+  .g-assign {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    gap: 12px;
+    padding: 12px 0;
+  }
+  .g-assign .who2 small {
+    display: none;
+  }
+  .g-assign .who2 b {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .who2 {
+    gap: 10px;
+  }
+  /* list rows: the text takes the full width, the actions wrap below it */
+  .g-row .grow {
+    flex: 1 1 100%;
   }
 }
 
