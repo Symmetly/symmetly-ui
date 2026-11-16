@@ -748,7 +748,7 @@ html[data-theme="dark"] .sy-theme .moon {
   flex-wrap: wrap;
 }
 /* inside a page the cards that follow supply their own gap */
-.page-main > .g-head {
+.page-main .g-head {
   padding-bottom: 0;
 }
 .g-loading {
