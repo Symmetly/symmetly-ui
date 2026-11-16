@@ -1,4 +1,4 @@
-export { Shell, Rail, TopBar } from "./shell";
+export { Shell, Rail, TopBar, LayoutPrefs } from "./shell";
 export type { RailItem, AppEntry, OrgEntry, MenuLink } from "./shell";
 export * from "./icons";
 export { Loading, PageHead, Meter, Avatar, hueOf } from "./parts";

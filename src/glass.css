@@ -1302,3 +1302,26 @@ textarea.g-field {
     display: none !important;
   }
 }
+
+.sy-orglink {
+  gap: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+.sy-orglink:hover {
+  background: var(--glass-strong);
+}
+.sy-orglink svg {
+  width: 18px;
+  height: 18px;
+}
+@media (max-width: 560px) {
+  .sy-orglink span {
+    display: none;
+  }
+  .sy-orglink {
+    width: 44px;
+    padding: 0;
+  }
+}

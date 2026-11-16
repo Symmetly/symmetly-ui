@@ -438,6 +438,205 @@ html[data-theme="dark"] .g-sc.pair {
   }
 }
 
+/* ---------- account screens: profile, appearance, launcher ---------- */
+.g-me {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-bottom: 26px;
+}
+.g-me b {
+  font-size: 20px;
+}
+.g-me small {
+  display: block;
+  color: var(--muted);
+  font-size: 14px;
+  margin: 2px 0 12px;
+}
+.g-av.big {
+  width: 84px;
+  height: 84px;
+  font-size: 32px;
+}
+.g-block.danger {
+  border-color: rgba(224, 69, 94, 0.3);
+}
+.g-themes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.g-theme {
+  padding: 14px;
+  border-radius: 24px;
+  border: 2px solid var(--edge);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.g-theme:hover {
+  transform: translateY(-2px);
+}
+.g-theme.on {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--chip);
+}
+.g-theme input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.g-theme b {
+  font-size: 14px;
+  padding: 0 4px 2px;
+}
+.g-swatch {
+  height: 96px;
+  border-radius: 16px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+}
+.g-swatch i {
+  height: 14px;
+  border-radius: 99px;
+}
+.g-swatch i:nth-child(1) {
+  width: 60%;
+}
+.g-swatch i:nth-child(2) {
+  width: 85%;
+}
+.g-swatch i:nth-child(3) {
+  width: 40%;
+}
+.g-swatch.light {
+  background: linear-gradient(135deg, #dfe6ff, #e9f7f1);
+}
+.g-swatch.light i {
+  background: rgba(255, 255, 255, 0.9);
+}
+.g-swatch.dark {
+  background: linear-gradient(135deg, #0d1230, #1a1238);
+}
+.g-swatch.dark i {
+  background: rgba(255, 255, 255, 0.16);
+}
+.g-swatch.auto {
+  background: linear-gradient(115deg, #dfe6ff 50%, #0d1230 50%);
+}
+.g-swatch.auto i {
+  background: rgba(120, 130, 170, 0.5);
+}
+/* a page with no top bar or rail: a centred column (the apps launcher) */
+.g-bare {
+  min-height: 100dvh;
+  padding: 0 24px;
+  display: grid;
+  place-items: center;
+}
+.g-center {
+  margin: 0 auto;
+  width: min(960px, 100%);
+  text-align: center;
+  padding: 70px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.g-center .mark {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 18px;
+}
+.g-center h1 {
+  font-size: 34px;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.g-center .sub {
+  margin: 6px 0 34px;
+  color: var(--muted);
+}
+.g-appgrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  width: 100%;
+  text-align: left;
+}
+.g-appcard {
+  padding: 26px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.g-appcard:hover {
+  transform: translateY(-4px);
+}
+.g-appcard img {
+  width: 58px;
+  height: 58px;
+}
+.g-appcard h3 {
+  font-size: 19px;
+  margin: 0 0 4px;
+}
+.g-appcard p {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 0;
+}
+.g-appcard .go {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--accent);
+}
+.g-appcard.off .go {
+  color: var(--muted);
+}
+.g-topright {
+  position: fixed;
+  top: 22px;
+  right: 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 5;
+}
+@media (max-width: 1100px) {
+  .g-appgrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .g-themes {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 560px) {
+  .g-appgrid {
+    gap: 12px;
+  }
+  .g-appcard {
+    min-height: 150px;
+    padding: 18px;
+  }
+  .g-topright {
+    top: 14px;
+    right: 14px;
+  }
+}
+
 /* ---------- modal ---------- */
 .g-modal-back {
   position: fixed;

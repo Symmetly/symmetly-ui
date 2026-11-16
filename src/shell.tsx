@@ -46,6 +46,7 @@ function useShell() {
 }
 
 const SIDE_KEY = "sym-side-open";
+const GLASS_KEY = "sym-glass";
 
 export function Shell({
   bar,
@@ -79,6 +80,7 @@ export function Shell({
   useEffect(() => {
     try {
       if (localStorage.getItem(SIDE_KEY) === "1") setSideOpenState(true);
+      if (localStorage.getItem(GLASS_KEY) === "solid") document.documentElement.dataset.glass = "solid";
     } catch {}
   }, []);
   const setSideOpen = useCallback((open: boolean) => {
@@ -240,6 +242,7 @@ export function TopBar({
   credits,
   orgs,
   newOrg,
+  orgSettings,
   user,
   profileLinks,
   signOutAction,
@@ -253,6 +256,8 @@ export function TopBar({
   /** Organisations to switch between. Leave out to hide the selector. */
   orgs?: OrgEntry[];
   newOrg?: { label: string; href: string };
+  /** A button that opens the settings of the organisation you administer (Account only). */
+  orgSettings?: { label: string; href: string };
   user: { name: string | null; email: string };
   profileLinks: MenuLink[];
   signOutAction: () => void | Promise<void>;
@@ -422,6 +427,12 @@ export function TopBar({
           </div>
         )}
 
+        {orgSettings && (
+          <a href={orgSettings.href} className="sy-bubble sy-orglink" title={orgSettings.label}>
+            <GearIcon />
+            <span>{orgSettings.label}</span>
+          </a>
+        )}
         <button ref={themeBtn} type="button" className="sy-bubble round sy-theme" title="Appearance" aria-label="Switch between light and dark" onClick={toggleTheme}>
           <SunIcon className="sun" />
           <MoonIcon className="moon" />
@@ -530,4 +541,41 @@ function PairMark() {
   const { pairIcon } = useShell();
   // eslint-disable-next-line @next/next/no-img-element
   return <img src={pairIcon} alt="" width={24} height={24} />;
+}
+
+/**
+ * The two layout switches of the Appearance page: keep the sidebar expanded, and reduce transparency
+ * (solid surfaces instead of glass). Both are saved on this device only, in the browser.
+ */
+export function LayoutPrefs() {
+  const { sideOpen, setSideOpen } = useShell();
+  const [solid, setSolidState] = useState(false);
+  useEffect(() => {
+    try {
+      setSolidState(localStorage.getItem(GLASS_KEY) === "solid");
+    } catch {}
+  }, []);
+  const setSolid = (on: boolean) => {
+    setSolidState(on);
+    if (on) document.documentElement.dataset.glass = "solid";
+    else delete document.documentElement.dataset.glass;
+    try {
+      localStorage.setItem(GLASS_KEY, on ? "solid" : "glass");
+    } catch {}
+  };
+  const row = (id: string, title: string, hint: string, on: boolean, set: (v: boolean) => void) => (
+    <div className="g-rule">
+      <div>
+        <b id={`${id}-label`}>{title}</b>
+        <small>{hint}</small>
+      </div>
+      <button type="button" role="switch" aria-checked={on} aria-labelledby={`${id}-label`} className="g-sw" onClick={() => set(!on)} />
+    </div>
+  );
+  return (
+    <>
+      {row("pref-side", "Keep the sidebar expanded", "Show labels next to the icons instead of floating icons only.", sideOpen, setSideOpen)}
+      {row("pref-solid", "Reduce transparency", "Use solid surfaces instead of glass. Easier on older screens and for some eyes.", solid, setSolid)}
+    </>
+  );
 }
