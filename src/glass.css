@@ -345,12 +345,6 @@ html[data-theme="dark"] .sy-theme .moon {
 .sy-menu.who {
   width: 270px;
 }
-.sy-menu.apps {
-  width: 270px;
-  padding: 10px;
-  gap: 12px;
-  border-radius: var(--radius);
-}
 @keyframes sy-pop {
   from {
     opacity: 0;
@@ -462,29 +456,83 @@ html[data-theme="dark"] .sy-theme .moon {
   gap: 12px;
   padding: 10px 12px;
 }
-.sy-tiles {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
+/* ---------- app icons fan out beside the grid button, which morphs into an X ----------
+   Each icon is a round bubble like the button. The strip floats beside it, so nothing else in the bar
+   moves. Where there is no room it becomes a tray under the bar. */
+.sy-apps-root {
+  position: relative;
 }
-.sy-tile {
+.sy-appsbtn {
+  position: relative;
+  z-index: 41;
+}
+.sy-appsbtn .g-glyph {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.15s ease;
+}
+.sy-appsbtn .x {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.4);
+}
+.sy-appsbtn[aria-expanded="true"] .g-grid {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.4);
+}
+.sy-appsbtn[aria-expanded="true"] .x {
+  opacity: 1;
+  transform: none;
+}
+.sy-strip {
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 0;
+  z-index: 40;
+  width: max-content;
   display: flex;
   align-items: center;
-  justify-content: center;
-  aspect-ratio: 1 / 1;
-  border-radius: 22px;
-  background: var(--glass-soft);
-  border: 1px solid transparent;
-  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  gap: 10px;
+  visibility: hidden;
+  pointer-events: none;
+  transition: visibility 0s linear 0.2s;
+}
+.sy-strip.open {
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+.sy-tiles {
+  display: flex;
+  gap: 10px;
+}
+.sy-tiles > :nth-child(1) { --i: 0; }
+.sy-tiles > :nth-child(2) { --i: 1; }
+.sy-tiles > :nth-child(3) { --i: 2; }
+.sy-tiles > :nth-child(4) { --i: 3; }
+.sy-tiles > :nth-child(5) { --i: 4; }
+.sy-allapps { --i: 5; }
+.sy-tile,
+.sy-allapps {
+  opacity: 0;
+  transform: translateX(calc(var(--i, 0) * -54px - 54px)) scale(0.4);
+  transition: transform 0.18s cubic-bezier(0.4, 0, 1, 1), opacity 0.12s ease, background 0.2s, border-color 0.2s;
+}
+.sy-strip.open .sy-tile,
+.sy-strip.open .sy-allapps {
+  opacity: 1;
+  transform: none;
+  transition: transform 0.26s cubic-bezier(0.34, 1.4, 0.64, 1) calc(var(--i, 0) * 20ms),
+    opacity 0.14s ease calc(var(--i, 0) * 20ms), background 0.2s, border-color 0.2s;
+}
+.sy-strip.open .sy-tile:hover {
+  transform: translateY(-2px);
+  transition-delay: 0s;
+  background: var(--glass-strong);
 }
 .sy-tile img {
-  width: 44px;
-  height: 44px;
-}
-.sy-tile:hover {
-  background: var(--glass-strong);
-  border-color: var(--edge);
-  transform: translateY(-2px);
+  width: 28px;
+  height: 28px;
 }
 .sy-tile.current {
   background: var(--chip);
@@ -495,14 +543,75 @@ html[data-theme="dark"] .sy-theme .moon {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  height: 42px;
-  border-radius: 999px;
-  background: var(--glass-strong);
-  border: 1px solid var(--edge);
+  height: 44px;
+  padding: 0 16px;
+  font-size: 13px;
   font-weight: 700;
-  font-size: 14px;
+  white-space: nowrap;
   text-decoration: none;
   color: inherit;
+}
+@media (max-width: 1250px) {
+  .sy-strip {
+    position: fixed;
+    left: 12px;
+    top: 68px;
+    padding: 6px;
+    gap: 6px;
+    border-radius: 999px;
+    background: var(--glass-strong);
+    border: 1px solid var(--edge);
+    box-shadow: var(--shadow);
+    -webkit-backdrop-filter: blur(34px) saturate(1.6);
+    backdrop-filter: blur(34px) saturate(1.6);
+    opacity: 0;
+    transform: translateY(-8px) scale(0.97);
+    transform-origin: top left;
+    transition: opacity 0.15s ease, transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.2s;
+  }
+  .sy-strip.open {
+    opacity: 1;
+    transform: none;
+  }
+  html[data-theme="dark"] .sy-strip {
+    background: rgba(52, 62, 118, 0.97);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 16px 44px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+  .sy-tiles {
+    gap: 6px;
+  }
+  .sy-tile,
+  .sy-allapps {
+    transform: translateY(-8px) scale(0.6);
+  }
+}
+@media (max-width: 560px) {
+  .sy-strip .sy-tile {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+  }
+  .sy-tile img {
+    width: 26px;
+    height: 26px;
+  }
+  .sy-allapps {
+    height: 40px;
+    padding: 0 12px;
+  }
+  .sy-allapps .g-glyph {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sy-appsbtn .g-glyph,
+  .sy-tile,
+  .sy-allapps,
+  .sy-strip.open .sy-tile,
+  .sy-strip.open .sy-allapps {
+    transition: none;
+  }
 }
 .sy-mobile-only {
   display: none;
@@ -1125,11 +1234,6 @@ textarea.g-field {
     right: 12px;
     top: 68px;
     width: auto;
-  }
-  .sy-menu.apps {
-    position: fixed;
-    left: 12px;
-    top: 68px;
   }
 }
 @media (max-width: 560px) {

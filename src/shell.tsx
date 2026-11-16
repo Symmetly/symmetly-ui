@@ -315,39 +315,39 @@ export function TopBar({
         <div className="sy-relative sy-apps-root">
           <button
             type="button"
-            className="sy-bubble round"
+            className="sy-bubble round sy-appsbtn"
             title="Apps"
             aria-label="Apps"
             aria-haspopup="menu"
             aria-expanded={open === "apps"}
             onClick={() => toggle("apps")}
           >
-            <GridIcon />
+            <GridIcon className="g-grid" />
+            <CloseIcon className="x" />
           </button>
-          {open === "apps" && (
-            <div className="sy-menu apps left g-glass" role="menu" aria-label="Apps">
-              <div className="sy-tiles">
-                {apps.map((a) => (
-                  <a
-                    key={a.name}
-                    href={a.href}
-                    role="menuitem"
-                    title={a.name}
-                    aria-label={a.name}
-                    aria-current={a.current ? "page" : undefined}
-                    className={`sy-tile${a.current ? " current" : ""}`}
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={a.icon} alt="" />
-                  </a>
-                ))}
-              </div>
-              <a href={allAppsHref} role="menuitem" className="sy-allapps">
-                <GridIcon />
-                All apps
-              </a>
+          {/* Always in the page, shown and hidden by CSS so the icons can fan out and back. */}
+          <div className={`sy-strip${open === "apps" ? " open" : ""}`} role="menu" aria-label="Apps">
+            <div className="sy-tiles">
+              {apps.map((a) => (
+                <a
+                  key={a.name}
+                  href={a.href}
+                  role="menuitem"
+                  title={a.name}
+                  aria-label={a.name}
+                  aria-current={a.current ? "page" : undefined}
+                  className={`sy-tile sy-bubble round${a.current ? " current" : ""}`}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={a.icon} alt="" />
+                </a>
+              ))}
             </div>
-          )}
+            <a href={allAppsHref} role="menuitem" className="sy-allapps sy-bubble">
+              <GridIcon />
+              All apps
+            </a>
+          </div>
         </div>
       </div>
 
