@@ -1261,6 +1261,11 @@ textarea.g-field {
   overflow-x: auto;
   padding-bottom: 4px;
 }
+.g-jumps a.on {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: var(--on-accent);
+  border-color: transparent;
+}
 @media (min-width: 1101px) {
   .g-jumps {
     position: fixed;
