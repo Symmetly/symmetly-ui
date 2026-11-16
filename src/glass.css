@@ -1138,3 +1138,68 @@ textarea.g-field {
     display: flex;
   }
 }
+
+/* ---------- list rows and links ---------- */
+.g-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 16px 22px;
+  transition: transform 0.2s;
+}
+.g-row:hover {
+  transform: translateY(-2px);
+}
+.g-row h3 {
+  margin: 0;
+  font-size: 16px;
+}
+.g-row p {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+.g-row .grow {
+  flex: 1;
+  min-width: 0;
+}
+.g-dot {
+  width: 46px;
+  height: 46px;
+  border-radius: 16px;
+  background: var(--chip);
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+.g-dot img {
+  width: 26px;
+  height: 26px;
+}
+.g-link {
+  background: none;
+  border: 0;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: none;
+}
+.g-link:hover {
+  background: var(--chip);
+}
+.g-link.danger {
+  color: var(--danger);
+}
+.g-link.danger:hover {
+  background: var(--danger-bg);
+}
+.g-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
