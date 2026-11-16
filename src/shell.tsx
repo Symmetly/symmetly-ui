@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { createContext, useCallback, useContext, useEffect, useRef, useState, useTransition } from "react";
 import type { ReactNode } from "react";
 import {
@@ -273,12 +274,16 @@ export function TopBar({
 
   const display = user.name ?? user.email;
   const initial = display.trim().charAt(0).toUpperCase() || "?";
-  const current = orgs?.find((o) => o.current);
+  // The current organisation comes from the address, so the bar itself never has to re-render
+  // (or show a loading state) when the person switches organisation.
+  const path = usePathname();
+  const current = orgs?.find((o) => o.current) ?? orgs?.find((o) => path === o.href || path.startsWith(o.href + "/"));
+  const brandHref = current?.href ?? brand.href;
 
   return (
     <header className="sy-bar no-print" ref={root}>
       <div className="sy-group">
-        <Link href={brand.href} className="sy-bubble brand" aria-label={brand.name}>
+        <Link href={brandHref} className="sy-bubble brand" aria-label={brand.name}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={brand.icon} alt="" />
           {brand.name}
@@ -357,7 +362,7 @@ export function TopBar({
                       href={o.href}
                       role="menuitem"
                       className="sy-row"
-                      aria-current={o.current ? "page" : undefined}
+                      aria-current={o.key === current?.key ? "page" : undefined}
                       onClick={() => setOpen(null)}
                     >
                       <span className="sy-oa" style={{ ["--h" as string]: hue(o.name) }}>
@@ -367,7 +372,7 @@ export function TopBar({
                         <b>{o.name}</b>
                         {o.hint && <small>{o.hint}</small>}
                       </span>
-                      {o.current && <span className="chk">&#10003;</span>}
+                      {o.key === current?.key && <span className="chk">&#10003;</span>}
                       {o.settingsHref && <span style={{ width: 34 }} />}
                     </Link>
                     {o.settingsHref && (
