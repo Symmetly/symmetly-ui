@@ -635,6 +635,125 @@ html[data-theme="dark"] .g-sc.pair {
     top: 14px;
     right: 14px;
   }
+  .g-center {
+    padding-top: 96px;
+  }
+}
+
+/* ---------- pages before sign-in ---------- */
+.g-auth {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+.g-auth-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 28px;
+}
+.g-auth-logo img {
+  height: 32px;
+  width: auto;
+}
+.g-auth-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.g-auth-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 24px 28px;
+}
+.g-authcard {
+  width: min(480px, 100%);
+  padding: 40px 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.g-authcard h1 {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.g-authcard .sub {
+  color: var(--muted);
+  margin: -10px 0 4px;
+}
+.g-authcard .f {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.g-authcard .lrow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.g-authcard .btn-wide {
+  width: 100%;
+}
+.g-authcard .centered {
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+  margin: 0;
+}
+.g-divider {
+  height: 1px;
+  background: var(--edge);
+  border: 0;
+  margin: 2px 0;
+}
+.g-auth-foot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 4px 24px 40px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+}
+.g-appicons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.g-appicons img {
+  width: 28px;
+  height: 28px;
+}
+.g-auth-links {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.g-auth-links a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+.g-auth-links a:hover {
+  text-decoration: underline;
+}
+@media (max-width: 560px) {
+  .g-auth-top {
+    padding: 14px 16px;
+  }
+  .g-authcard {
+    padding: 28px 22px;
+  }
 }
 
 /* ---------- modal ---------- */

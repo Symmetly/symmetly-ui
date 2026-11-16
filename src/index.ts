@@ -3,5 +3,6 @@ export type { RailItem, AppEntry, OrgEntry, MenuLink } from "./shell";
 export * from "./icons";
 export { Loading, PageHead, Meter, Avatar, hueOf } from "./parts";
 export { JumpNav } from "./jump-nav";
+export { AuthLayout, ThemeToggle } from "./auth";
 export { isTheme, paintTheme, switchTheme, currentIsDark } from "./theme";
 export type { Theme } from "./theme";
