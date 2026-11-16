@@ -217,6 +217,9 @@ export type OrgEntry = {
   hint?: string;
   href: string;
   current?: boolean;
+  /** Address prefix that means "you are in this organisation" when `href` is a deeper page
+   *  (for example `/o/<id>` when href is `/o/<id>/members`). Defaults to `href`. */
+  matchPrefix?: string;
   /** Owners and admins only: a gear that appears on hover and goes to the organisation's settings. */
   settingsHref?: string;
 };
@@ -293,7 +296,7 @@ export function TopBar({
   // The current organisation comes from the address, so the bar itself never has to re-render
   // (or show a loading state) when the person switches organisation.
   const path = usePathname();
-  const current = orgs?.find((o) => o.current) ?? orgs?.find((o) => path === o.href || path.startsWith(o.href + "/"));
+  const current = orgs?.find((o) => o.current) ?? orgs?.find((o) => { const m = o.matchPrefix ?? o.href; return path === m || path.startsWith(m + "/"); });
   const brandHref = current?.href ?? brand.href;
 
   return (
