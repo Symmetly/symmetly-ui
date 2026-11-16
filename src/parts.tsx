@@ -39,9 +39,9 @@ export function hueOf(text: string) {
 }
 
 /** A round initial in a colour that is the same every time for the same name. */
-export function Avatar({ name, seed = name }: { name: string; seed?: string }) {
+export function Avatar({ name, seed = name, big = false }: { name: string; seed?: string; big?: boolean }) {
   return (
-    <span className="g-av" style={{ "--h": hueOf(seed) } as CSSProperties}>
+    <span className={big ? "g-av big" : "g-av"} style={{ "--h": hueOf(seed) } as CSSProperties}>
       {name.charAt(0).toUpperCase()}
     </span>
   );
