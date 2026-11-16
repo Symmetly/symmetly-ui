@@ -414,6 +414,30 @@ html[data-theme="dark"] .g-sc.pair {
   margin-top: 2px;
 }
 
+/* label over value pairs in two columns (read-only facts about something) */
+.g-facts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px 28px;
+}
+.g-facts small {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.g-facts b {
+  font-size: 16px;
+}
+@media (max-width: 820px) {
+  .g-facts {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ---------- modal ---------- */
 .g-modal-back {
   position: fixed;

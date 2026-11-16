@@ -1,6 +1,6 @@
 {
   "name": "@symmetly/ui",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Shared glass UI for the Symmetly apps: tokens, theme circle, top bar, rail, menus, Pair panel, primitives.",
   "license": "UNLICENSED",
   "type": "module",
