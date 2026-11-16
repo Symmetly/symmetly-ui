@@ -747,6 +747,22 @@ html[data-theme="dark"] .sy-theme .moon {
   padding: 18px 6px 12px;
   flex-wrap: wrap;
 }
+/* inside a page the cards that follow supply their own gap */
+.page-main > .g-head {
+  padding-bottom: 0;
+}
+.g-loading {
+  padding: 40px;
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0;
+}
+/* a card or row that is a link keeps the card look, not link colours */
+a.g-card,
+a.g-row {
+  text-decoration: none;
+  color: inherit;
+}
 .g-sec-head {
   display: flex;
   align-items: center;
