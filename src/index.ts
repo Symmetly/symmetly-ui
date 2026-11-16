@@ -4,6 +4,8 @@ export * from "./icons";
 export { Loading, PageHead, Meter, Avatar, hueOf } from "./parts";
 export { JumpNav } from "./jump-nav";
 export { Greeting } from "./greeting";
+export { appMenu, appUrlsFromEnv, launcherTiles, symmetlyApps } from "./apps";
+export type { AppKey, AppUrls, LauncherTile } from "./apps";
 export { AuthLayout, ThemeToggle } from "./auth";
 export { isTheme, paintTheme, switchTheme, currentIsDark } from "./theme";
 export type { Theme } from "./theme";
