@@ -1068,3 +1068,213 @@ a.g-itemrow:hover {
     gap: 4px;
   }
 }
+
+/* ---------- Year plan: terms with coloured units, detail panel, class cards, progress ---------- */
+.g-tag.warn {
+  background: rgba(240, 162, 58, 0.2);
+  color: #c7821a;
+}
+.g-tag.good {
+  background: rgba(74, 99, 232, 0.16);
+  color: var(--accent);
+}
+.g-ctxrow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.g-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  margin-bottom: 14px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 20%, var(--glass-strong)), var(--glass));
+  border: 1px solid var(--edge);
+}
+.g-banner b {
+  display: block;
+}
+.g-banner span {
+  color: var(--muted);
+  font-size: 13px;
+}
+.g-banner .acts {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.g-terms {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.g-term {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.g-term h3 {
+  font-size: 15px;
+  font-weight: 800;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+.g-term h3 small {
+  color: var(--faint);
+  font-weight: 600;
+  font-size: 12px;
+}
+.g-unit {
+  --u: #4a63e8;
+  position: relative;
+  display: block;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  padding: 12px 14px 12px 18px;
+  border-radius: 18px;
+  background: var(--glass-soft);
+  border: 1px solid var(--edge);
+  cursor: pointer;
+  transition: transform 0.15s, background 0.15s;
+}
+.g-unit::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 12px;
+  bottom: 12px;
+  width: 4px;
+  border-radius: 4px;
+  background: var(--u);
+}
+.g-unit:hover {
+  background: var(--glass-strong);
+  transform: translateY(-1px);
+}
+.g-unit.sel {
+  border-color: var(--u);
+  background: color-mix(in srgb, var(--u) 14%, var(--glass-strong));
+}
+.g-unit b {
+  font-size: 14px;
+  display: block;
+}
+.g-unit span {
+  color: var(--muted);
+  font-size: 12px;
+}
+.g-unit[data-c="green"] { --u: #3fbaa1; }
+.g-unit[data-c="amber"] { --u: #f0a23a; }
+.g-unit[data-c="rose"] { --u: #f0607a; }
+.g-unit[data-c="violet"] { --u: #844ae8; }
+.g-unit[data-c="teal"] { --u: #3a9be8; }
+.g-hol {
+  text-align: center;
+  color: var(--faint);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px;
+  border-radius: 12px;
+  background: repeating-linear-gradient(135deg, transparent 0 6px, color-mix(in srgb, var(--faint) 14%, transparent) 6px 12px);
+}
+.g-detail {
+  padding: 22px 24px;
+}
+.g-detail h2 {
+  font-size: 19px;
+  font-weight: 800;
+}
+.g-detail .meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 8px 0 14px;
+}
+.g-progress {
+  height: 10px;
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--faint) 22%, transparent);
+  overflow: hidden;
+}
+.g-progress i {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #3fbaa1, #4a63e8);
+}
+.g-classes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.g-cls {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-radius: var(--radius);
+  transition: transform 0.2s;
+}
+a.g-cls:hover {
+  transform: translateY(-2px);
+}
+.g-cls .top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.g-cls h3 {
+  font-size: 18px;
+  font-weight: 800;
+}
+.g-cls .dots {
+  display: flex;
+  gap: 5px;
+}
+.g-cls .dots i {
+  flex: 1;
+  height: 8px;
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--faint) 26%, transparent);
+}
+.g-cls .dots i.d {
+  background: #3fbaa1;
+}
+.g-cls .dots i.n {
+  background: var(--accent);
+}
+.g-cls.newc {
+  border: 1px dashed var(--edge);
+  background: transparent;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  font-weight: 800;
+  min-height: 168px;
+  box-shadow: none;
+}
+@media (max-width: 1100px) {
+  .g-terms,
+  .g-classes {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 700px) {
+  .g-terms,
+  .g-classes {
+    grid-template-columns: 1fr;
+  }
+}
