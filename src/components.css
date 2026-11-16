@@ -721,6 +721,8 @@ html[data-theme="dark"] .g-sc.pair {
 .g-prod .ph h3,
 .g-row h3,
 .g-modal h3,
+.g-appcard h3,
+.g-center h1,
 .g-empty h2,
 .g-sec-head h2 {
   font-weight: 800;
