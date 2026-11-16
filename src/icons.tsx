@@ -92,3 +92,35 @@ export const UsersIcon = (p: P) => (
     <path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 20c0-2.2 1.6-4 4-4" />
   </G>
 );
+
+// Icons from the Organisation prototype.
+export const PeopleIcon = (p: P) => (
+  <G {...p}>
+    <path d="M4 20c0-3.3 2.7-6 6-6s6 2.7 6 6" />
+    <circle cx="10" cy="8" r="3.2" />
+    <path d="M16 5.5a3 3 0 0 1 0 5.6M18 14.4c1.7.8 2.9 2.8 3 5.6" />
+  </G>
+);
+export const CardIcon = (p: P) => (
+  <G {...p}>
+    <rect x="3" y="6" width="18" height="12" rx="3" />
+    <path d="M3 10h18M7 15h4" />
+  </G>
+);
+export const ReceiptIcon = (p: P) => (
+  <G {...p}>
+    <path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6" />
+  </G>
+);
+export const InfoIcon = (p: P) => (
+  <G {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 11v6M12 7.5v.5" />
+  </G>
+);
+export const SearchIcon = (p: P) => (
+  <G {...p}>
+    <circle cx="11" cy="11" r="7" />
+    <path d="M20 20l-4-4" />
+  </G>
+);

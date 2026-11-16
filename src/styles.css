@@ -7,6 +7,7 @@
    existing pages pick up the new look before they are rebuilt with the g- primitives. */
 
 @import "./glass.css";
+@import "./components.css";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 

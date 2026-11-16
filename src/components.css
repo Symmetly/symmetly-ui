@@ -1,0 +1,434 @@
+/* Components added for the Organisation screens (stat cards, meters, people tables, product
+   cards, assignment grid, switches, modal). Imported by styles.css after glass.css. */
+
+/* ---------- stat cards, meters, finders, people tables ---------- */
+.g-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.g-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 22px 26px;
+}
+.g-stat small {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.g-stat b {
+  font-size: 30px;
+  letter-spacing: -0.02em;
+}
+.g-stat b i,
+.g-big i {
+  font-style: normal;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.g-stat span {
+  color: var(--muted);
+  font-size: 13px;
+}
+.g-meter {
+  height: 8px;
+  border-radius: 99px;
+  background: var(--chip);
+  overflow: hidden;
+  margin-top: 8px;
+}
+.g-meter span {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+.g-muted {
+  color: var(--muted);
+  font-size: 13px;
+}
+.g-finder {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.g-search {
+  flex: 1;
+  min-width: 220px;
+  height: 46px;
+  border-radius: 999px;
+  border: 1px solid var(--edge);
+  background: var(--glass);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 18px;
+  color: var(--faint);
+  box-shadow: var(--shadow);
+}
+.g-search input {
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: inherit;
+  color: var(--text);
+}
+.g-pillselect {
+  height: 46px;
+  padding: 0 38px 0 18px;
+  border-radius: 999px;
+  border: 1px solid var(--edge);
+  background: var(--glass);
+  font: inherit;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--muted);
+  box-shadow: var(--shadow);
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none' stroke='%238a96ad' stroke-width='2'%3E%3Cpath d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+}
+.g-table2 {
+  padding: 8px 10px;
+}
+.g-trow {
+  display: grid;
+  grid-template-columns: var(--cols, 2.4fr 0.9fr 1.8fr 1fr 1fr);
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  border-radius: 20px;
+}
+.g-trow + .g-trow {
+  border-top: 1px solid var(--edge);
+  border-radius: 0;
+}
+.g-trow:not(.thead):hover {
+  background: var(--glass-soft);
+  border-radius: 20px;
+}
+.g-trow.thead {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.g-trow.pend .who2,
+.g-trow.pend .g-role {
+  opacity: 0.6;
+}
+.who2 {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+.who2 small {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.who2 b {
+  font-size: 15px;
+}
+.g-av {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex: none;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(135deg, hsl(var(--h, 230) 75% 62%), hsl(calc(var(--h, 230) + 40) 70% 52%));
+}
+.g-role {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--glass-soft);
+  border: 1px solid var(--edge);
+  color: var(--muted);
+}
+.g-role.owner {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: var(--on-accent);
+  border: 0;
+}
+.g-role.admin {
+  background: var(--chip);
+  color: var(--accent);
+  border-color: transparent;
+}
+.g-chips2 {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.g-sc {
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--chip);
+  color: var(--accent);
+}
+.g-sc.keep {
+  background: rgba(240, 162, 58, 0.2);
+  color: #c9810f;
+}
+.g-sc.pair {
+  background: rgba(132, 74, 232, 0.16);
+  color: #7a47d8;
+}
+html[data-theme="dark"] .g-sc.keep {
+  color: #f6c36a;
+}
+html[data-theme="dark"] .g-sc.pair {
+  color: #bfa2ff;
+}
+.g-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  position: relative;
+}
+.g-dots {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 18px;
+  border: 0;
+  background: none;
+}
+.g-dots:hover {
+  background: var(--glass-strong);
+}
+.g-mini {
+  height: 34px;
+  padding: 0 16px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: inherit;
+  font-weight: 700;
+  font-size: 13px;
+  border: 1px solid var(--edge);
+  background: var(--glass-strong);
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+.g-mini.wide {
+  width: 100%;
+  height: 40px;
+  margin-top: auto;
+}
+.g-mini.warn {
+  color: var(--danger);
+  border-color: rgba(224, 71, 95, 0.4);
+}
+
+/* ---------- product cards and assignment grid ---------- */
+.g-cards3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+}
+.g-prod {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.g-prod .ph {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.g-prod .ph img {
+  width: 46px;
+  height: 46px;
+}
+.g-prod .ph h3 {
+  font-size: 18px;
+  margin: 0 0 3px;
+}
+.g-big {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 8px 0 0;
+}
+.g-block {
+  padding: 28px 32px;
+}
+.g-bh {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.g-bh h3 {
+  font-size: 18px;
+  margin: 0;
+}
+.g-assign {
+  display: grid;
+  grid-template-columns: var(--cols, 2.4fr 1fr 1fr 1fr);
+  align-items: center;
+  gap: 16px;
+  padding: 12px 6px;
+}
+.g-assign + .g-assign {
+  border-top: 1px solid var(--edge);
+}
+.g-assign.head2 {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.g-sw {
+  display: inline-block;
+  width: 44px;
+  height: 26px;
+  border-radius: 99px;
+  background: var(--line);
+  position: relative;
+  cursor: pointer;
+  flex: none;
+  transition: background 0.2s;
+  border: 0;
+  padding: 0;
+}
+.g-sw::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s;
+}
+.g-sw[aria-checked="true"] {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+}
+.g-sw[aria-checked="true"]::after {
+  transform: translateX(18px);
+}
+.g-sw:disabled {
+  opacity: 0.5;
+  cursor: progress;
+}
+.g-grid2f {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+.g-rule {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 16px 0;
+}
+.g-rule + .g-rule {
+  border-top: 1px solid var(--edge);
+}
+.g-rule small {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+/* ---------- modal ---------- */
+.g-modal-back {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  background: rgba(10, 14, 34, 0.35);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  animation: sy-pop 0.2s ease;
+}
+.g-modal {
+  width: min(520px, 92vw);
+  max-height: 90dvh;
+  overflow: auto;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: var(--menu-bg);
+}
+.g-modal h3 {
+  font-size: 20px;
+  margin: 0;
+}
+.g-mact {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  align-items: center;
+  margin-top: 6px;
+}
+
+@media (max-width: 820px) {
+  .g-stats,
+  .g-grid2f {
+    grid-template-columns: 1fr;
+  }
+  .g-trow {
+    grid-template-columns: 1fr auto;
+  }
+  .g-trow:not(.thead) > :nth-child(3),
+  .g-trow:not(.thead) > :nth-child(4),
+  .g-trow.thead {
+    display: none;
+  }
+  .g-block {
+    padding: 22px 18px;
+  }
+}
+
+/* Card headings keep their weight (the reset flattens h1-h6). */
+.g-bh h3,
+.g-prod .ph h3,
+.g-row h3,
+.g-modal h3,
+.g-empty h2,
+.g-sec-head h2 {
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
