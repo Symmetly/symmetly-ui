@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 
-// A section counts as being read once its top has passed just under the floating top bar.
-const READING_LINE = 170;
+// A section counts as being read once its top has passed this share of the screen height (an anchor
+// jump lands a section well below the floating bars, so a fixed pixel line would miss it).
+const READING_LINE = 0.45;
 
 /**
  * The section links of a long page (the lesson editor): chips on a phone, a pinned vertical list on a
@@ -15,20 +16,27 @@ export function JumpNav({ sections, label = "Jump to section" }: { sections: rea
   // After a click the page scrolls to the section; ignore scroll updates until it has settled so the
   // clicked link stays highlighted even when the page is too short to bring it to the top.
   const lockUntil = useRef(0);
+  const scroller = useRef<Element | null>(null);
 
   useEffect(() => {
     let frame = 0;
     const update = () => {
       frame = 0;
       if (Date.now() < lockUntil.current) return;
+      const line = window.innerHeight * READING_LINE;
       let current = sections[0]?.[0] ?? "";
       for (const [id] of sections) {
         const el = document.getElementById(id);
-        if (el && el.getBoundingClientRect().top <= READING_LINE) current = id;
+        if (el && el.getBoundingClientRect().top <= line) current = id;
       }
+      // At the very bottom the last sections may be too short to reach the line.
+      const s = scroller.current;
+      if (s && s.scrollTop > 0 && s.scrollTop + s.clientHeight >= s.scrollHeight - 4) current = sections[sections.length - 1][0];
       setActive(current);
     };
-    const onScroll = () => {
+    const onScroll = (e?: Event) => {
+      const target = e?.target;
+      scroller.current = target instanceof Element ? target : document.scrollingElement;
       if (!frame) frame = requestAnimationFrame(update);
     };
     // Capture: the page may scroll inside the shell rather than the window.
