@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { createContext, useCallback, useContext, useEffect, useRef, useState, useTransition } from "react";
+import { Suspense, createContext, useCallback, useContext, useEffect, useRef, useState, useTransition } from "react";
 import type { ReactNode } from "react";
 import {
   BellIcon,
@@ -54,6 +54,7 @@ export function Shell({
   notifications,
   unread = false,
   focus = false,
+  focusPaths,
   children,
 }: {
   bar: ReactNode;
@@ -65,6 +66,9 @@ export function Shell({
   unread?: boolean;
   /** Focus view: no rail, the page gets the whole width. */
   focus?: boolean;
+  /** Regular expressions (as strings) for addresses that open in focus view. Decided from the
+   *  address, so it is right on first paint and the top bar stays mounted when you enter or leave. */
+  focusPaths?: string[];
   children: ReactNode;
 }) {
   const [panel, setPanel] = useState<Panel>(null);
@@ -108,10 +112,17 @@ export function Shell({
     clearUnread: () => setHasUnread(false),
   };
 
-  const showRail = !focus && !!rail;
+  const showRail = !!rail;
   return (
     <ShellContext.Provider value={value}>
       <div className={`sy-app${showRail ? "" : " focus"}`}>
+        {/* Focus view is switched by CSS (:has) when this flag is present. */}
+        {focus && <span className="sy-focus-flag" hidden />}
+        {focusPaths && (
+          <Suspense fallback={null}>
+            <FocusProbe paths={focusPaths} />
+          </Suspense>
+        )}
         {bar}
         {showRail && rail}
         <div className="sy-main" id="sy-scroller">
@@ -144,6 +155,11 @@ export function Shell({
       </div>
     </ShellContext.Provider>
   );
+}
+
+function FocusProbe({ paths }: { paths: string[] }) {
+  const path = usePathname();
+  return paths.some((re) => new RegExp(re).test(path)) ? <span className="sy-focus-flag" hidden /> : null;
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -288,7 +304,7 @@ export function TopBar({
           <img src={brand.icon} alt="" />
           {brand.name}
         </Link>
-        <div className="sy-relative">
+        <div className="sy-relative sy-apps-root">
           <button
             type="button"
             className="sy-bubble round"
@@ -327,7 +343,7 @@ export function TopBar({
         </div>
       </div>
 
-      <div className="sy-group">
+      <div className="sy-group sy-right">
         {credits && (
           <div className="sy-bubble sy-credits">
             <span className="coin" aria-hidden>

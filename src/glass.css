@@ -1203,3 +1203,81 @@ textarea.g-field {
   flex-wrap: wrap;
   gap: 8px;
 }
+
+/* ---------- focus view (editor, builder) ---------- */
+/* No rail; the bar keeps the brand and the Pair pill only. */
+.sy-app:has(.sy-focus-flag) {
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "bar bar" "main ai";
+}
+.sy-app:has(.sy-focus-flag) .sy-side {
+  display: none;
+}
+@media (max-width: 1100px) {
+  .sy-app:has(.sy-focus-flag) {
+    grid-template-columns: 1fr;
+    grid-template-areas: "bar" "main";
+  }
+}
+.sy-app:has(.sy-focus-flag) .sy-apps-root {
+  display: none;
+}
+.sy-app:has(.sy-focus-flag) .sy-right > *:not(.sy-pill) {
+  display: none;
+}
+.sy-app:has(.sy-focus-flag) .sy-main {
+  animation: sy-focus-in 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes sy-focus-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+/* Section nav: a row of chips on small screens, pinned to the left on wide ones. */
+.g-jumps {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+@media (min-width: 1101px) {
+  .g-jumps {
+    position: fixed;
+    left: 28px;
+    top: 156px;
+    width: 168px;
+    z-index: 15;
+    flex-direction: column;
+    gap: 6px;
+    padding: 0;
+    overflow: visible;
+  }
+  .g-jumps a {
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 16px;
+    background: var(--glass);
+    border-color: transparent;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .g-jumps a:hover {
+    transform: translateX(3px);
+  }
+  .g-jumps a.on {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: var(--on-accent);
+  }
+  .g-jumps-pad {
+    padding-left: 190px;
+  }
+}
+@media print {
+  .g-jumps {
+    display: none !important;
+  }
+}
