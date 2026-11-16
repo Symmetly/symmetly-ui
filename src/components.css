@@ -847,3 +847,224 @@ html[data-theme="dark"] .g-sc.pair {
   font-weight: 800;
   letter-spacing: -0.01em;
 }
+
+/* ---------- Home: greeting, resume strip, tool cards, recent list ---------- */
+.g-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 6px 16px;
+  flex-wrap: wrap;
+}
+.g-seg {
+  display: inline-flex;
+  padding: 5px;
+  border-radius: 999px;
+  background: var(--glass);
+  border: 1px solid var(--edge);
+  box-shadow: var(--shadow);
+}
+.g-seg a,
+.g-seg button {
+  display: inline-flex;
+  align-items: center;
+  height: 38px;
+  padding: 0 20px;
+  border-radius: 999px;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+}
+.g-seg .on {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  box-shadow: 0 8px 18px -8px var(--accent);
+}
+.g-resume {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  margin-bottom: 22px;
+  border-radius: var(--radius);
+}
+.g-resume .ico {
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  background: var(--chip);
+  display: grid;
+  place-items: center;
+  flex: none;
+  color: var(--accent);
+}
+.g-resume small {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.g-resume span {
+  color: var(--muted);
+  font-size: 14px;
+}
+.g-resume .go {
+  margin-left: auto;
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.g-tools {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 26px;
+}
+.g-tool {
+  --tint: #844ae8;
+  position: relative;
+  padding: 20px;
+  min-height: 168px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 4px;
+  border-radius: var(--radius);
+  background: linear-gradient(145deg, color-mix(in srgb, var(--tint) 26%, var(--glass-strong)), var(--glass));
+  border: 1px solid var(--edge);
+  box-shadow: var(--shadow);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+a.g-tool:hover {
+  transform: translateY(-3px);
+}
+.g-tool .gi {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  color: var(--tint);
+  background: color-mix(in srgb, var(--tint) 18%, var(--glass-strong));
+}
+.g-tool .gi svg {
+  width: 24px;
+  height: 24px;
+}
+.g-tool h3 {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.g-tool p {
+  color: var(--muted);
+  font-size: 13px;
+}
+.g-tool .chip2 {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  background: var(--glass-strong);
+  border: 1px solid var(--edge);
+  color: var(--muted);
+}
+.g-tool.primary .chip2 {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  border: 0;
+  letter-spacing: 0.06em;
+}
+html[data-theme="dark"] .g-tool.primary .chip2 {
+  color: #0c1030;
+}
+.g-tool.soon {
+  opacity: 0.9;
+}
+.g-tool.t2 {
+  --tint: #3fbaa1;
+}
+.g-tool.t3 {
+  --tint: #f0a23a;
+}
+.g-tool.t4 {
+  --tint: #f0607a;
+}
+.g-recent {
+  display: grid;
+  gap: 10px;
+}
+.g-itemrow {
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-radius: var(--radius);
+  transition: transform 0.2s;
+}
+a.g-itemrow:hover {
+  transform: translateY(-2px);
+}
+.g-itemrow .dot {
+  width: 46px;
+  height: 46px;
+  border-radius: 16px;
+  background: var(--chip);
+  display: grid;
+  place-items: center;
+  flex: none;
+  color: var(--accent);
+}
+.g-itemrow .dot svg {
+  width: 24px;
+  height: 24px;
+}
+.g-itemrow h3 {
+  font-size: 16px;
+  font-weight: 800;
+}
+.g-itemrow p {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 1px;
+}
+.g-itemrow .when {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 13px;
+  white-space: nowrap;
+}
+@media (max-width: 1250px) {
+  .g-tools {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .g-tools {
+    grid-template-columns: 1fr;
+  }
+  .g-itemrow .when {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+  }
+}
