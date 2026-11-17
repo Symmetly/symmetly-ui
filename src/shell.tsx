@@ -242,6 +242,7 @@ export function TopBar({
   credits,
   orgs,
   newOrg,
+  manageOrgs,
   orgSettings,
   user,
   profileLinks,
@@ -256,6 +257,8 @@ export function TopBar({
   /** Organisations to switch between. Leave out to hide the selector. */
   orgs?: OrgEntry[];
   newOrg?: { label: string; href: string };
+  /** The last row of the organisation menu: one general place to manage the organisations you administer. */
+  manageOrgs?: { label: string; href: string };
   /** A button that opens the settings of the organisation you administer (Account only). */
   orgSettings?: { label: string; href: string };
   user: { name: string | null; email: string };
@@ -362,7 +365,7 @@ export function TopBar({
           </div>
         )}
 
-        {orgs && (orgs.length > 1 || newOrg) && (
+        {orgs && (orgs.length > 1 || newOrg || manageOrgs) && (
           <div className="sy-relative">
             <button
               type="button"
@@ -381,7 +384,7 @@ export function TopBar({
             {open === "org" && (
               <div className="sy-menu org right g-glass" role="menu" aria-label="Organisations">
                 {orgs.map((o) => (
-                  <div key={o.key} style={{ position: "relative" }}>
+                  <div key={o.key} className="sy-orgrow" style={{ position: "relative" }}>
                     <Link
                       href={o.href}
                       role="menuitem"
@@ -420,6 +423,15 @@ export function TopBar({
                       <span className="sy-plus">+</span>
                       {newOrg.label}
                     </Link>
+                  </>
+                )}
+                {manageOrgs && (
+                  <>
+                    <div className="sy-sep" />
+                    <a href={manageOrgs.href} role="menuitem" className="sy-row act" onClick={() => setOpen(null)}>
+                      <GearIcon />
+                      {manageOrgs.label}
+                    </a>
                   </>
                 )}
               </div>

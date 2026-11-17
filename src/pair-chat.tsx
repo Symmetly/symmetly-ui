@@ -6,7 +6,8 @@ import { DefaultChatTransport, type UIMessage } from "ai";
 import { Greeting } from "./greeting";
 import { DocIcon } from "./icons";
 
-export type PairOrg = { id: string; name: string; remaining: number; source?: "organisation" | "personal" };
+/** Where the credits of a message can come from here. Only offered when there is a real choice. */
+export type PairPayer = { id: "organisation" | "personal"; label: string; remaining: number };
 export type PairMode = { id: string; label: string; placeholder: string; suggestions: string[] };
 
 // The three modes of the prototype. "Ask about this page" only makes sense where there is a page to
@@ -33,9 +34,10 @@ type Props = {
   icon: string;
   /** First name for "Good morning, Hana". */
   name: string;
-  orgs: PairOrg[];
-  /** The organisation to start in (a stored conversation is fixed to its own). */
-  orgId?: string;
+  /** The organisation the chat belongs to (one per conversation, chosen by the host, for example from the address). */
+  orgId: string;
+  /** Who can pay for a message here, the default first. Two or more shows the "Paid by" selector in the input box. */
+  payers: PairPayer[];
   /** Which product's tools to use; the host sets it. */
   product?: string;
   /** The page the person is on: shown as the chip above the composer and sent with each message. */
@@ -44,7 +46,7 @@ type Props = {
   /** A stored conversation to continue. Without it a new one starts. */
   conversation?: { id: string; messages: UIMessage[]; locked?: boolean };
   /** Reads the balance after each answer (a server action of the host). */
-  getBalance?: (orgId: string) => Promise<{ remaining?: number } | null>;
+  getBalance?: (orgId: string, payer?: string) => Promise<{ remaining?: number; options?: { source: string; remaining: number }[] } | null>;
   /** Called after the first answer of a new conversation has been saved. */
   onSaved?: (id: string) => void;
   /** Where "Top up credits" goes. */
@@ -54,8 +56,10 @@ type Props = {
 // The Pair chat: greeting with modes and suggestions, the thread, and the composer. It lives in the
 // slide-in panel of every app (pass it to <Shell pair>) and, wider, on the full Pair page.
 export function PairChat(props: Props) {
-  // "New chat" remounts the inner chat, which starts a fresh conversation.
+  // "New chat" remounts the inner chat, which starts a fresh conversation. A fresh chat can start with
+  // another payer and the last message already typed (the "use my own credits" button does this).
   const [round, setRound] = useState(0);
+  const [start, setStart] = useState<{ payer?: PairPayer["id"]; text?: string }>({});
   const continuing = round === 0 ? props.conversation : undefined;
   return (
     <ChatInner
@@ -63,7 +67,12 @@ export function PairChat(props: Props) {
       {...props}
       initialMessages={continuing?.messages ?? []}
       locked={!!continuing?.locked}
-      onNew={() => setRound((r) => r + 1)}
+      startPayer={start.payer}
+      startText={start.text}
+      onNew={(next) => {
+        setStart(next ?? {});
+        setRound((r) => r + 1);
+      }}
     />
   );
 }
@@ -72,8 +81,8 @@ function ChatInner({
   api = "/api/pair",
   icon,
   name,
-  orgs,
-  orgId: startOrg,
+  orgId,
+  payers,
   product,
   context,
   modes: modesProp,
@@ -82,15 +91,22 @@ function ChatInner({
   topUpHref,
   conversation,
   initialMessages,
-  locked,
+  startPayer,
+  startText,
   onNew,
-}: Props & { initialMessages: UIMessage[]; locked: boolean; onNew: () => void }) {
-  const [orgId, setOrgId] = useState(startOrg ?? orgs[0]?.id ?? "");
-  const [remaining, setRemaining] = useState<Record<string, number>>(() => Object.fromEntries(orgs.map((o) => [o.id, o.remaining])));
+}: Props & {
+  initialMessages: UIMessage[];
+  locked: boolean;
+  startPayer?: PairPayer["id"];
+  startText?: string;
+  onNew: (next?: { payer?: PairPayer["id"]; text?: string }) => void;
+}) {
+  const [payer, setPayer] = useState<PairPayer["id"] | undefined>(startPayer && payers.some((p) => p.id === startPayer) ? startPayer : payers[0]?.id);
+  const [remaining, setRemaining] = useState<Record<string, number>>(() => Object.fromEntries(payers.map((p) => [p.id, p.remaining])));
   const modes = useMemo(() => modesProp ?? defaultPairModes(!!context), [modesProp, context]);
   const [modeId, setModeId] = useState(modes[0].id);
   const mode = modes.find((m) => m.id === modeId) ?? modes[0];
-  const [text, setText] = useState("");
+  const [text, setText] = useState(startText ?? "");
   const thread = useRef<HTMLDivElement>(null);
   const box = useRef<HTMLTextAreaElement>(null);
 
@@ -116,11 +132,13 @@ function ChatInner({
     onFinish: async () => {
       if (convId.current) onSaved?.(convId.current);
       if (getBalance) {
-        const next = await getBalance(orgId);
-        if (next?.remaining !== undefined) setRemaining((r) => ({ ...r, [orgId]: next.remaining as number }));
+        const next = await getBalance(orgId, choose ? payer : undefined);
+        if (next?.options?.length) setRemaining((r) => ({ ...r, ...Object.fromEntries(next.options!.map((o) => [o.source, o.remaining])) }));
+        else if (next?.remaining !== undefined && payer) setRemaining((r) => ({ ...r, [payer]: next.remaining as number }));
       }
     },
   });
+  const choose = payers.length > 1;
   const busy = status === "submitted" || status === "streaming";
   const chatting = messages.length > 0;
   const lastUser = [...messages].reverse().find((m) => m.role === "user");
@@ -135,16 +153,15 @@ function ChatInner({
     if (!t || busy) return;
     setText("");
     clearError();
-    void sendMessage({ text: t }, { body: { orgId, product, page: context?.data } });
+    void sendMessage({ text: t }, { body: { orgId, product, page: context?.data, ...(choose ? { payer } : {}) } });
   }
 
   const failure = error ? readFailure(error.message) : null;
-  const current = orgs.find((o) => o.id === orgId);
 
   return (
     <div className={`pc${chatting ? " chatting" : ""}`}>
       <div className="pc-top">
-        <button type="button" className="pc-new" onClick={onNew}>
+        <button type="button" className="pc-new" onClick={() => onNew()}>
           + New chat
         </button>
       </div>
@@ -206,6 +223,11 @@ function ChatInner({
                 </div>
                 <p>{failure.message}</p>
                 <div className="pc-acts">
+                  {OUT_OF_CREDITS.has(failure.code) && payer === "organisation" && payers.some((p) => p.id === "personal") && (
+                    <button type="button" className="go" onClick={() => onNew({ payer: "personal", text: lastUser ? textOf(lastUser) : "" })}>
+                      Use my own Pair credits
+                    </button>
+                  )}
                   {OUT_OF_CREDITS.has(failure.code) && topUpHref && (
                     <a className="go" href={topUpHref}>
                       Top up credits
@@ -276,11 +298,11 @@ function ChatInner({
           }}
         />
         <div className="pc-foot">
-          {orgs.length > 1 && (
-            <select aria-label="Organisation" className="pc-orgsel" value={orgId} disabled={locked || chatting} onChange={(e) => setOrgId(e.target.value)}>
-              {orgs.map((o) => (
-                <option key={o.id} value={o.id}>
-                  {o.name}
+          {choose && (
+            <select aria-label="Paid by" className="pc-orgsel" value={payer} onChange={(e) => setPayer(e.target.value as PairPayer["id"])}>
+              {payers.map((p) => (
+                <option key={p.id} value={p.id}>
+                  Paid by {p.label}
                 </option>
               ))}
             </select>
@@ -290,8 +312,8 @@ function ChatInner({
           </button>
         </div>
       </form>
-      <small className="pc-note" title={current?.source === "organisation" ? "Paid by the organisation" : "Paid from your own Pair credits"}>
-        <b>{remaining[orgId]?.toLocaleString() ?? "-"}</b> Pair credits left · Pair can make mistakes. Always double-check the results.
+      <small className="pc-note">
+        <b>{(payer && remaining[payer]?.toLocaleString()) ?? "-"}</b> Pair credits left · Pair can make mistakes. Always double-check the results.
       </small>
     </div>
   );

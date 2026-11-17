@@ -428,6 +428,7 @@ html[data-theme="dark"] .sy-theme .moon {
   transition: opacity 0.15s, transform 0.15s, background 0.15s;
 }
 .sy-row:hover .sy-gear,
+.sy-orgrow:hover .sy-gear,
 .sy-gear:focus-visible {
   opacity: 1;
   transform: none;
