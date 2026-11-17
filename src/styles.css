@@ -8,6 +8,7 @@
 
 @import "./glass.css";
 @import "./components.css";
+@import "./pair.css";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 

@@ -1,0 +1,411 @@
+/* Pair chat: the panel beside the page and the full Pair page share these. Ported from the
+   prototype (brand/design-prototypes/glass-editor.html, "Pair chat"). Imported by styles.css. */
+
+.pc {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.pc-top {
+  display: none;
+  justify-content: flex-end;
+  padding-bottom: 4px;
+}
+.pc.chatting .pc-top {
+  display: flex;
+}
+.pc-new {
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--edge);
+  background: var(--glass-soft);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--muted);
+  cursor: pointer;
+}
+.pc-new:hover {
+  color: var(--text);
+  background: var(--glass-strong);
+}
+
+/* empty state: greeting, modes, suggestions */
+.pc-hello {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 6px;
+  min-height: 0;
+  overflow: auto;
+}
+.pc-hello img {
+  width: 62px;
+  height: 62px;
+  margin-bottom: 8px;
+}
+.pc-hello h1 {
+  font-size: 24px;
+  letter-spacing: -0.02em;
+}
+.pc-hello p {
+  color: var(--muted);
+}
+.pc-modes {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.pc-modes button {
+  height: 38px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid var(--edge);
+  background: var(--glass-soft);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+}
+.pc-modes button.on {
+  background: var(--chip);
+  color: var(--accent);
+  border-color: transparent;
+}
+.pc-sugs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: none;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto 10px;
+}
+.pc-sugs button {
+  text-align: left;
+  padding: 11px 16px;
+  border-radius: 18px;
+  border: 1px solid var(--edge);
+  background: var(--glass-soft);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.pc-sugs button:hover {
+  background: var(--glass-strong);
+  transform: translateY(-1px);
+}
+
+/* thread */
+.pc-thread {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: auto;
+  padding: 16px 8px 10px 4px;
+  min-height: 0;
+}
+.pc-msg {
+  max-width: 92%;
+  font-size: 14px;
+  line-height: 1.5;
+  animation: pc-in 0.28s ease;
+}
+@keyframes pc-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.pc-msg.me {
+  align-self: flex-end;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 20px 20px 6px 20px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+html[data-theme="dark"] .pc-msg.me {
+  color: #0c1030;
+}
+.pc-msg.pair {
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 100%;
+}
+.pc-who {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  font-size: 13px;
+}
+.pc-who img {
+  width: 20px;
+  height: 20px;
+}
+.pc-txt {
+  color: var(--text);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.pc-used {
+  color: var(--faint);
+  font-size: 12px;
+  font-weight: 600;
+}
+.pc-meta {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  color: var(--faint);
+  font-size: 12px;
+}
+.pc-meta button {
+  border: 0;
+  background: none;
+  padding: 0;
+  color: var(--muted);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 12px;
+}
+.pc-meta button:hover {
+  color: var(--text);
+}
+.pc-typing {
+  display: inline-flex;
+  gap: 5px;
+  padding: 12px 16px;
+  border-radius: 20px;
+  background: var(--glass-soft);
+  border: 1px solid var(--edge);
+  align-self: flex-start;
+}
+.pc-typing i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--muted);
+  animation: pc-bob 1s infinite ease-in-out;
+}
+.pc-typing i:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.pc-typing i:nth-child(3) {
+  animation-delay: 0.3s;
+}
+@keyframes pc-bob {
+  0%,
+  60%,
+  100% {
+    transform: none;
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-5px);
+    opacity: 1;
+  }
+}
+
+/* result and warning cards (drafts and "out of credits") */
+.pc-card {
+  border: 1px solid var(--edge);
+  border-radius: 20px;
+  background: var(--glass-soft);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.pc-card .rt {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: baseline;
+}
+.pc-card .rt b {
+  font-size: 14px;
+}
+.pc-card .rt span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.pc-card p {
+  color: var(--muted);
+  font-size: 13px;
+}
+.pc-msg.warn .pc-card {
+  border-color: rgba(240, 162, 58, 0.5);
+  background: rgba(240, 162, 58, 0.1);
+}
+.pc-acts {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.pc-acts button,
+.pc-acts a {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--edge);
+  background: var(--glass-strong);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--text);
+  cursor: pointer;
+}
+.pc-acts .go {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  border: 0;
+}
+html[data-theme="dark"] .pc-acts .go {
+  color: #0c1030;
+}
+.pc-acts button[disabled] {
+  opacity: 0.55;
+  cursor: default;
+}
+
+/* composer */
+.pc-composer {
+  flex: none;
+  border-radius: 24px;
+  padding: 12px;
+  background: var(--glass-strong);
+  border: 1px solid var(--edge);
+}
+.pc-ctx {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: var(--chip);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 12px;
+  margin-bottom: 8px;
+  max-width: 100%;
+}
+.pc-ctx span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pc-composer textarea {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  outline: none;
+  resize: none;
+  font: inherit;
+  font-size: 14px;
+  color: var(--text);
+  padding: 4px 2px;
+  max-height: 140px;
+}
+.pc-composer textarea::placeholder {
+  color: var(--faint);
+}
+.pc-composer .pc-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  color: var(--faint);
+}
+.pc-orgsel {
+  height: 32px;
+  max-width: 190px;
+  padding: 0 28px 0 12px;
+  border-radius: 999px;
+  border: 1px solid var(--edge);
+  background-color: var(--glass-soft);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+}
+.pc-orgsel:disabled {
+  opacity: 0.8;
+}
+.pc-send {
+  margin-left: auto;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  display: grid;
+  place-items: center;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.pc-send:hover {
+  transform: scale(1.06);
+}
+.pc-send[disabled] {
+  opacity: 0.4;
+  cursor: default;
+  transform: none;
+}
+.pc-note {
+  flex: none;
+  text-align: center;
+  color: var(--faint);
+  font-size: 11px;
+  margin-top: 8px;
+}
+.pc-note b {
+  color: var(--muted);
+}
+
+/* the full Pair page: the same chat, filling the space under the bar so the page itself never
+   scrolls (only the thread does). No max-width, see page-main. */
+.page-main:has(> .pc-page) {
+  min-height: 0;
+  padding-bottom: 20px;
+  /* half of the usual page margins */
+  padding-inline: clamp(12px, 3vw, 70px);
+}
+.pc-page {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  padding: 14px;
+}
+
+/* the input box is not as wide as the page: centred, at most a readable line */
+.pc-composer,
+.pc-note {
+  width: 100%;
+  max-width: 680px;
+  margin-inline: auto;
+}

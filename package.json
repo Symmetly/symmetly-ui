@@ -1,6 +1,6 @@
 {
   "name": "@symmetly/ui",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "Shared glass UI for the Symmetly apps: tokens, theme circle, top bar, rail, menus, Pair panel, primitives.",
   "license": "UNLICENSED",
   "type": "module",
@@ -25,11 +25,15 @@
   "peerDependencies": {
     "next": ">=16",
     "react": ">=19",
-    "react-dom": ">=19"
+    "react-dom": ">=19",
+    "ai": ">=7",
+    "@ai-sdk/react": ">=4"
   },
   "devDependencies": {
     "@types/react": "^19",
-    "typescript": "^5"
+    "typescript": "^5",
+    "ai": "^7.0.37",
+    "@ai-sdk/react": "^4.0.152"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"

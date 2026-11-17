@@ -9,3 +9,5 @@ export type { AppKey, AppUrls, LauncherTile } from "./apps";
 export { AuthLayout, ThemeToggle } from "./auth";
 export { isTheme, paintTheme, switchTheme, currentIsDark } from "./theme";
 export type { Theme } from "./theme";
+export { PairChat, defaultPairModes } from "./pair-chat";
+export type { PairOrg, PairMode } from "./pair-chat";
