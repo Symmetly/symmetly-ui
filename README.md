@@ -1,3 +1,5 @@
+> **Archived 2026-11-18.** This repository moved into the monorepo [Symmetly/symmetly-platform](https://github.com/Symmetly/symmetly-platform) (`apps/*` and `packages/*`). Do not make changes here.
+
 # @symmetly/ui
 
 The shared glass UI of the Symmetly apps (Plan, Account, Organisation and the ones to come): design
